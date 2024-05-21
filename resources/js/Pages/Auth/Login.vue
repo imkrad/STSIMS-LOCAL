@@ -15,8 +15,8 @@
                                     </div>
                                     <div class="col-10">
                                         <div class="text-primary mt-1">
-                                            <h4 class="fs-16 fw-semibold">ONELAB - DOST </h4>
-                                            <p class="mt-n2">The One-Stop Shop Laboratory</p>
+                                            <h4 class="fs-16 fw-semibold">STSIMS - DOST </h4>
+                                            <p class="mt-n2">Science & Technology Scholarship Information Management System</p>
                                         </div>
                                     </div>
                                 </div>
