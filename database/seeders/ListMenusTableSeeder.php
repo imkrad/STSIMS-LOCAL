@@ -33,7 +33,7 @@ class ListMenusTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => 2,
+                'id' => 3,
                 'name' => 'Scholars',
                 'icon' => 'ri-team-fill',
                 'route' => NULL,
@@ -104,7 +104,7 @@ class ListMenusTableSeeder extends Seeder
                 'route' => '/schools',
                 'path' => 'Modules/Schools',
                 'group' => 'Menu',
-                'order' => 3,
+                'order' => 2,
                 'has_child' => 0,
                 'is_mother' => 1,
                 'is_active' => 1,

@@ -93,7 +93,7 @@ export default {
             axios.get(page_url, {
                 params: {
                     keyword: this.filter.keyword,
-                    counts: parseInt(((window.innerHeight-350)/56)),
+                    counts: parseInt(((window.innerHeight-400)/56)),
                     option: 'lists',
                 }
             })

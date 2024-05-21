@@ -93,9 +93,14 @@
             </b-row>
         </div>
     </div>
+    <Truncate ref="truncate"/>
+    <Download ref="download"/>
 </template>
 <script>
+import Download from '../Modals/Download.vue';
+import Truncate from '../Modals/Truncate.vue';
 export default {
+    components: { Download, Truncate },
     props: ['statistics'],
     data(){
         return {
@@ -103,5 +108,13 @@ export default {
             colors: ['text-warning','text-danger','text-primary','text-success'],
         }
     },
+    methods: {
+        openDownload(){
+            this.$refs.download.show();
+        },
+        openTruncate(){
+            this.$refs.truncate.show();
+        }
+    }
 }
 </script>
