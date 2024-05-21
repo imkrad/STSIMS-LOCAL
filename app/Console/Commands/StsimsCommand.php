@@ -14,7 +14,7 @@ class StsimsCommand extends Command
     {--username=root : The database username}
     {--password= : The database password}';
 
-    protected $description = 'Install and configure ONELAB';
+    protected $description = 'Install and configure STSIMS';
 
     public function handle()
     {
