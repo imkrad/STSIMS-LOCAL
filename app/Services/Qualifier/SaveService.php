@@ -139,7 +139,7 @@ class SaveService
             $response = curl_exec($curl);
             curl_close($curl);
             $datas = json_decode($response);
-            // dd($response);
+            dd($response);
             return $datas;
 
         } catch (Exception $e) {
