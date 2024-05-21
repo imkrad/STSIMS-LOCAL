@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lists;
 use App\Models\ListAgency;
 use App\Models\ListCourse;
 use App\Models\SchoolCampus;
+use App\Models\SchoolCourse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\Lists\DropdownService;
@@ -29,6 +30,9 @@ class DropdownController extends Controller
             break;
             case 'courses':
                 return $this->courses($request);
+            break;
+            case 'courses2':
+                return $this->courses2($request);
             break;
             default: 
             return inertia('Modules/Lists/Dropdowns/Index',[
@@ -71,6 +75,14 @@ class DropdownController extends Controller
 
     public function courses(Request $request){
         $data = ListCourse::get();
+        return CourseResource::collection($data);
+    }
+
+    public function courses2(Request $request){
+        $school = $request->school;
+        $data = ListCourse::whereHas('lists',function ($query) use ($school) {
+            $query->where('school_id',$school);
+        })->get();
         return CourseResource::collection($data);
     }
 }

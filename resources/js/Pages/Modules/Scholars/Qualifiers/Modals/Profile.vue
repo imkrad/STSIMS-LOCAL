@@ -150,7 +150,7 @@
                                             <label :class="(form.errors) ? (form.errors.course_id) ? 'text-danger' : '' : ''">Course</label>
                                         </div>
                                         <Multiselect class="form-control"
-                                            placeholder="Select Course" label="course" trackBy="course"
+                                            placeholder="Select Course" label="name" trackBy="name"
                                             v-model="course" :close-on-select="true" 
                                             :searchable="true" :options="courses"/>
                                     </div>
@@ -220,7 +220,7 @@
                                             <label :class="(form.errors) ? (form.errors.course_id) ? 'text-danger' : '' : ''">Course</label>
                                         </div>
                                         <Multiselect class="form-control"
-                                            placeholder="Select Course" label="course" trackBy="course"
+                                            placeholder="Select Course" label="name" trackBy="name"
                                             v-model="course" :close-on-select="true" 
                                             :searchable="true" :options="courses"/>
                                     </div>
@@ -381,25 +381,35 @@ export default {
             }
             this.$refs.confirm.show(this.form);
         },
-        fetchSchool(value) {
-            if(value.length > 5){
-                axios.post(this.currentUrl + '/lists/search/schools', {
-                    word: value,
-                    is_endorsed: (this.type == 'Endorse Qualifier') ? true : false
-                })
-                .then(response => {
-                    this.schools = response.data.data;
-                })
-                .catch(err => console.log(err));
-            }
-        },
-        fetchCourses(id){
-            axios.get(this.currentUrl + '/lists/search/courses/'+id)
-            .then(response => {
-                this.courses = response.data.data;
-            })
+        // fetchSchool(value) {
+        //     if(value.length > 5){
+        //         axios.post(this.currentUrl + '/lists/search/schools', {
+        //             word: value,
+        //             is_endorsed: (this.type == 'Endorse Qualifier') ? true : false
+        //         })
+        //         .then(response => {
+        //             this.schools = response.data.data;
+        //         })
+        //         .catch(err => console.log(err));
+        //     }
+        // },
+        fetchSchool(code){
+            axios.get('/lists/dropdowns',{ params: { option: 'schools', keyword: code } })
+            .then(response => { this.schools = response.data.data; })
             .catch(err => console.log(err));
         },
+        fetchCourses(code) {
+            axios.get('/lists/dropdowns',{ params: { option: 'courses2', school : code } })
+            .then(response => { this.courses = response.data.data; })
+            .catch(err => console.log(err));
+        },
+        // fetchCourses(id){
+        //     axios.get(this.currentUrl + '/lists/search/courses/'+id)
+        //     .then(response => {
+        //         this.courses = response.data.data;
+        //     })
+        //     .catch(err => console.log(err));
+        // },
         hide(){
             this.$emit('status',true);
             this.school = null;

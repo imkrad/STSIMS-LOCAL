@@ -19,7 +19,7 @@ class SaveService
             'user' => $request->user,
             'school_id' => $request->school_id,
             'course_id' => $request->course_id,
-            'type' => $request->type
+            'option' => $request->type
         );
         $data = $this->sender($postData);
         return back()->with([
@@ -39,7 +39,7 @@ class SaveService
             'user' => $request->user,
             'school_id' => $request->school_id,
             'course_id' => $request->course_id,
-            'type' => $request->type,
+            'option' => $request->type,
         );
         $data = $this->sender($postData);
         return back()->with([
@@ -60,7 +60,7 @@ class SaveService
             'user' => $request->user,
             'school_id' => $request->school_id,
             'course_id' => $request->course_id,
-            'type' => $request->type,
+            'option' => $request->type,
         );
         $data = $this->sender($postData);
         return back()->with([
@@ -80,13 +80,11 @@ class SaveService
         $postData = array(
             'id' => $request->id,
             'is_completed' => 1,
-            'type' => 'updated',
             'address_id' => $request->address_id,
-            'type' => 'update'
+            'option' => 'update'
         );
         ($request->municipality_code != null && $request->municipality_code != 'n/a' ) ? $postData['municipality_code'] = $request->municipality_code : '';
         ($request->barangay_code) ? $postData['barangay_code'] = $request->barangay_code : '';
-
         $data = $this->sender($postData);
         return back()->with([
             'data' => ($data) ? $data : 'Nothing found.',
@@ -105,7 +103,7 @@ class SaveService
             'id' => $request->id,
             'status_id' => $request->status_id,
             'reason' => $request->reason,
-            'type' => 'edit'
+            'option' => 'edit'
         );
         $data = $this->sender($postData);
         return back()->with([
@@ -141,7 +139,7 @@ class SaveService
             $response = curl_exec($curl);
             curl_close($curl);
             $datas = json_decode($response);
-
+            // dd($response);
             return $datas;
 
         } catch (Exception $e) {

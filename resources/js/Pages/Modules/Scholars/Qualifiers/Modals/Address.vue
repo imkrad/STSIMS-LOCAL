@@ -161,14 +161,24 @@ export default {
                 },
             });
         },
-        fetchMunicipality($id){
-            axios.get(this.currentUrl + '/lists/municipalities/'+$id)
-            .then(response => { this.municipalities = response.data.data; })
+        // fetchMunicipality($id){
+        //     axios.get(this.currentUrl + '/lists/municipalities/'+$id)
+        //     .then(response => { this.municipalities = response.data.data; })
+        //     .catch(err => console.log(err));
+        // },
+        // fetchBarangay($id){
+        //     axios.get(this.currentUrl + '/lists/barangays/'+$id)
+        //     .then(response => { this.barangays = response.data.data; })
+        //     .catch(err => console.log(err));
+        // },
+         fetchMunicipality(code){
+            axios.get('/lists/locations/',{ params: { option: 'list_municipality', code: code } })
+            .then(response => { this.municipalities = response.data; })
             .catch(err => console.log(err));
         },
-        fetchBarangay($id){
-            axios.get(this.currentUrl + '/lists/barangays/'+$id)
-            .then(response => { this.barangays = response.data.data; })
+        fetchBarangay(code){
+            axios.get('/lists/locations/',{ params: { option: 'list_barangay', code: code } })
+            .then(response => { this.barangays = response.data; })
             .catch(err => console.log(err));
         },
         hide(){

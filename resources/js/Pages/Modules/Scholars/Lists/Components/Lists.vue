@@ -100,6 +100,14 @@ export default {
             index: null
         }
     },
+    watch: {
+        "filter.keyword"(newVal){
+            this.checkSearchStr(newVal)
+        },
+        "filter.year"(newVal){
+            this.checkSearchStr(newVal)
+        }
+    },
     created(){
         this.fetch();
     },
