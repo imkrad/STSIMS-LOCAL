@@ -34,7 +34,7 @@ class ViewService
                     $query->where('name', 'LIKE', '%'.$keyword.'%');
                 })->orWhere(function ($query) use ($keyword) {
                     $query->where('campus', 'LIKE', '%'.$keyword.'%');
-                });
+                })->orderBy('is_main','desc');
             })
             ->whereHas('school',function ($query) {
                 $query->orderBy('name','ASC');

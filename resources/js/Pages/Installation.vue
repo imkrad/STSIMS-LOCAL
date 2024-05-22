@@ -215,7 +215,7 @@ export default {
             this.form.put('/utility/users/update',{
                 preserveScroll: true,
                 onSuccess: (response) => {
-                    this.$inertia.get('/');
+                    this.$inertia.get('/dashboard');
                 }
             });
         }

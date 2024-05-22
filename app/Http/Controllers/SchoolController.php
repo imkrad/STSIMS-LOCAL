@@ -9,6 +9,7 @@ use App\Traits\HandlesTransaction;
 use App\Services\School\ViewService;
 use App\Services\School\SaveService;
 use App\Services\School\UpdateService;
+use App\Http\Requests\SchoolRequest;
 
 class SchoolController extends Controller
 {
@@ -41,7 +42,7 @@ class SchoolController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function store(SchoolRequest $request){
         if($request->type == 'api'){
             return $this->save->download();
         }else{

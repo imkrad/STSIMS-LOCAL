@@ -2,38 +2,38 @@
     <b-modal v-model="showModal" hide-footer class="v-modal-custom" modal-class="zoomIn" fullscreen>
         <template v-slot:header>
             <div style="border-bottom: 1px solid #ccc; width: 100%;">
-            <i @click="showModal=false" class="ri-close-circle-fill float-end" style="cursor:pointer; font-size: 40px;"></i>
-            <b-row class="mb-3 mt-n1">
-                <b-col md>
-                    <b-row class="align-items-center g-3">
-                        <b-col md="auto">
-                            <b-img class="img-thumbnail rounded-circle" style="width: 60px; height: 60px;" alt="img" src="/images/avatars/avatar.jpg" data-holder-rendered="true"></b-img>
-                        </b-col>
-                        <b-col md>
-                            <div>
-                                <h5 class="fw-semibold">{{user.profile.name}}</h5>
-                                <div class="hstack gap-3 flex-wrap">
-                                    <div class="text-muted">Spas ID :
-                                        <span class="text-body fw-medium">{{user.spas_id}}</span>
-                                    </div>
-                                    <div class="vr"></div>
-                                    <div class="text-muted">Program : 
-                                        <span class="text-body fw-medium">{{user.program}}</span>
-                                    </div>
-                                    <div class="vr"></div>
-                                    <div class="text-muted">Subprogram : 
-                                        <span class="text-body fw-medium">{{user.subprogram}}</span>
-                                    </div>
-                                    <div class="vr"></div>
-                                    <div class="text-muted">Awarded Year : 
-                                        <span class="text-body fw-medium">{{user.awarded_year}}</span>
+                <i @click="showModal=false" class="ri-close-circle-fill float-end" style="cursor:pointer; font-size: 40px;"></i>
+                <b-row class="mb-3 mt-n1">
+                    <b-col md>
+                        <b-row class="align-items-center g-3">
+                            <b-col md="auto">
+                                <b-img class="img-thumbnail rounded-circle" style="width: 60px; height: 60px;" alt="img" src="/images/avatars/avatar.jpg" data-holder-rendered="true"></b-img>
+                            </b-col>
+                            <b-col md>
+                                <div>
+                                    <h5 class="fw-semibold">{{user.profile.name}}</h5>
+                                    <div class="hstack gap-3 flex-wrap">
+                                        <div class="text-muted">Spas ID :
+                                            <span class="text-body fw-medium">{{user.spas_id}}</span>
+                                        </div>
+                                        <div class="vr"></div>
+                                        <div class="text-muted">Program : 
+                                            <span class="text-body fw-medium">{{user.program}}</span>
+                                        </div>
+                                        <div class="vr"></div>
+                                        <div class="text-muted">Subprogram : 
+                                            <span class="text-body fw-medium">{{user.subprogram}}</span>
+                                        </div>
+                                        <div class="vr"></div>
+                                        <div class="text-muted">Awarded Year : 
+                                            <span class="text-body fw-medium">{{user.awarded_year}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </b-col>
-                    </b-row>
-                </b-col>
-            </b-row>
+                            </b-col>
+                        </b-row>
+                    </b-col>
+                </b-row>
             </div>
         </template>
         <!--------------------------------------->
