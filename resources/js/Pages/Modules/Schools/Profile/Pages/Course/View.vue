@@ -46,7 +46,7 @@
                             </td>
                         </tr>
                         <tr v-for="(list, index) of selected.prospectuses" :key="index">
-                            <td>{{ list.school_year}} </td>
+                            <td style="border-left: none;">{{ list.school_year}} </td>
                         </tr>
                     </tbody>
                 </table>

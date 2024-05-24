@@ -93,7 +93,6 @@ class NewScholar implements ShouldQueue
                                     'attachment' => json_encode($attachment)
                                 ];
                     
-                    
                                 if($benefit['id'] == 1){
                                     $number = ($others != 'summer') ? 5 : 2; 
                                     for($x = 0; $x < $number; $x++){

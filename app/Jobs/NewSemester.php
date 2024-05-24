@@ -65,7 +65,6 @@ class NewSemester implements ShouldQueue
                 }else{
                     $enrollment = ScholarEnrollment::create($fill);
                 }
-                
 
                 if($enrollment){
                     $list_benefits = ListPrivilege::where('is_reimburseable',0)->get();
