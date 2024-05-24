@@ -57,6 +57,7 @@ export default {
             this.form.post('/schools',{
                 preserveScroll: true,
                 onSuccess: (response) => {
+                    this.$emit('new',true);
                     this.hide();
                 },
             });

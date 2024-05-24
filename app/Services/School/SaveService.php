@@ -75,7 +75,11 @@ class SaveService
         $request['added_by'] = \Auth::user()->id;
 
         $data = SchoolProspectus::create($request->all());
-        return $data;
+        return [
+            'data' => $data,
+            'message' => 'Prospectus added Succesfully!', 
+            'info' => "You've successfully added a prospectus.",
+        ];
     }
 
     public function truncate(){
