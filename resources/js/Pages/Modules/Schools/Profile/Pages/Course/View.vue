@@ -39,16 +39,16 @@
                     <thead class="table-light">
                         <tr style="">
                             <td >
-                                <!-- <button  @click="openNew(selected)" class="btn btn-light btn-sm btn-label mt-n1 float-end" type="button">
-                                    <div class="btn-content"><i class="ri-add-circle-fill label-icon align-middle fs-12 me-2"></i>New</div>
-                                </button> -->
+                                <button  @click="openNew(selected)" class="btn btn-primary btn-sm mt-n1 mb-n1 float-end" type="button">
+                                    <i class="ri-add-circle-fill fs-12"></i>
+                                </button>
                                 <span class="fw-semibold">LIST OF PROSPECTUS</span>
                             </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(list, index) of selected.prospectuses" :key="index">
-                            <td style="cursor: pointer;">Academic Year {{ list.school_year}}
+                            <td @click="openProspectus(list,index)" style="cursor: pointer;">Academic Year {{ list.school_year}}
                                 <span v-if="list.is_active" class="badge bg-success float-end">Active</span>
                                 <span v-else class="badge bg-danger float-end">Inactive</span>
                             </td>
@@ -64,12 +64,25 @@
                                 <tr style="">
                                     <td >
                                         <span class="fw-semibold">Academic Year {{prospectus.school_year}}</span>
+                                        <div class="hstack float-end gap-2 mt-n2 mb-n1">
+                                             <button @click="lockBtn(prospectus)" v-b-tooltip.hover :title="(prospectus.is_locked) ? 'Unlock' : 'Lock'" class="btn btn-sm btn-primary float-end mt-1 me-n2" type="button">
+                                                <div v-if="prospectus.is_locked" class="btn-content"><i class="ri-lock-unlock-fill"></i></div>
+                                                <div v-else class="btn-content"><i class="ri-lock-fill"></i></div>
+                                            </button>
+                                            <button v-if="prospectus.is_locked" @click="activateBtn(prospectus)" class="btn btn-sm btn-label mt-1" :class="(prospectus.is_active) ? 'btn-danger' : 'btn-success'" type="button">
+                                                <div v-if="!prospectus.is_active" class="btn-content"><i class="ri-list-check label-icon align-middle fs-12 me-2"></i>Set as Active</div>
+                                                <div v-else class="btn-content"><i class="ri-list-check label-icon align-middle fs-12 me-2"></i>Set as Inactive</div>
+                                            </button>
+                                            <button v-if="!prospectus.is_locked" @click="saveBtn()" class="btn btn-primary btn-sm btn-label mt-1" type="button">
+                                                <div class="btn-content"><i class="ri-checkbox-circle-fill label-icon align-middle fs-12 me-2"></i>Save</div>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             </thead>
                         </table>
                     </div>
-                    <b-tabs v-model="tabIndex">
+                    <b-tabs v-model="tabIndex" class="mt-n2">
                         <b-tab v-for="(semester,index) in semesters" v-bind:key="index">
                             <div class="table-responsive">
                                 <table class="table table-bordered mb-0"> 
@@ -102,46 +115,46 @@
                                                     <tr v-for="(course, index3) in s.courses" v-bind:key="'a-'+index3" class="mb-n4" style="display: block;">
                                                         <td width="12%">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" v-model="course.is_lab" type="checkbox" id="formCheck1">
+                                                                <input class="form-check-input" v-model="course.is_lab" type="checkbox" id="formCheck1" :disabled="prospectus.is_locked">
                                                                 <label class="form-check-label fs-12" for="formCheck1">&nbsp;&nbsp;Is Laboratory?</label>
                                                             </div>
                                                         </td>
                                                         <td width="14%">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" v-model="course.is_nonacademic" type="checkbox" id="formCheck2">
+                                                                <input class="form-check-input" v-model="course.is_nonacademic" type="checkbox" id="formCheck2" :disabled="prospectus.is_locked">
                                                                 <label class="form-check-label fs-12" for="formCheck2">&nbsp;&nbsp;Is Non-Academic?</label> 
                                                             </div>                                                           
                                                         </td>
                                                         <td width="12%">
-                                                            <input type="text" class="form-control" v-model="course.code" placeholder="Course code" style="text-transform: capitalize;" required>
+                                                            <input type="text" class="form-control" v-model="course.code" placeholder="Course code" style="text-transform: capitalize;" :disabled="prospectus.is_locked" required>
                                                         </td>
                                                         <td width="52%">
-                                                            <input type="text" class="form-control" v-model="course.subject" placeholder="Course/Subject" style="text-transform: capitalize;" required>
+                                                            <input type="text" class="form-control" v-model="course.subject" placeholder="Course/Subject" style="text-transform: capitalize;" :disabled="prospectus.is_locked" required>
                                                         </td>
                                                         <td width="5%">
-                                                            <input type="text" class="form-control" v-model="course.unit" placeholder="Unit" style="text-transform: capitalize;" required>
+                                                            <input type="text" class="form-control" v-model="course.unit" placeholder="Unit" style="text-transform: capitalize;" :disabled="prospectus.is_locked" required>
                                                         </td>
                                                         <td class="text-end" width="2%">
-                                                            <b-button @click="rmvBtn(index,index2,index3)" variant="soft-danger" v-b-tooltip.hover title="Remove" class="edit-list"><i class="ri-delete-bin-5-line align-bottom"></i> </b-button>
+                                                            <b-button @click="rmvBtn(index,index2,index3)" variant="soft-danger" v-b-tooltip.hover title="Remove" class="edit-list" :disabled="prospectus.is_locked"><i class="ri-delete-bin-5-line align-bottom"></i> </b-button>
                                                         </td>
                                                     </tr>
                                                     
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <table class="table table-bordered mb-0">
-                                            <tbody>
+                                        <table class="table table-bordered mt-2 mb-0">
+                                            <thead class="table-light">
                                                 <tr class="bg-opacity-10">
                                                     <td>
-                                                        <button @click="addBtn(index,index2)" class="btn btn-secondary btn-md btn-label me-1" type="button">
+                                                        <button @click="addBtn(index,index2)" class="btn btn-secondary btn-md btn-sm btn-label mt-n3 mb-n3 me-1" type="button">
                                                             <div class="btn-content"><i class="ri-add-circle-fill label-icon align-middle fs-16 me-2"></i> Add Subject </div>
                                                         </button>
                                                     </td>
                                                     <td>
-                                                        <span class="float-end font-size-11 fw-bold mt-2 me-2">Total Units: {{ totalUnits(s.courses) }}</span>
+                                                        <span class="float-end fw-bold">Total Units: {{ totalUnits(s.courses) }}</span>
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            </thead>
                                         </table>
                                     </b-tab>
                                 </b-tabs>
@@ -152,12 +165,16 @@
             </div>
         </div>
     </b-modal>
+    <Lock @message="updateNew()" ref="lock"/>
+    <Status @message="updateNew()" ref="status"/>
     <Prospectus :term="term" @new="addNew" ref="prospectus"/>
 </template>
 <script>
+import Lock from './Modals/Lock.vue';
+import Status from './Modals/Status.vue';
 import Prospectus from './Modals/Prospectus.vue';
 export default {
-    components: { Prospectus },
+    components: { Prospectus, Status, Lock },
     props: ['term'],
     data(){
         return {
@@ -177,6 +194,11 @@ export default {
             tabIndex2: 0,
             showModal: false
         }
+    },
+    computed : {
+        updated: function () {
+            return this.semesters;
+        },
     },
     methods: {
         show(data){
@@ -201,6 +223,11 @@ export default {
         addNew(){
             this.selected.prospectuses.unshift(this.$page.props.flash.data);
         },
+        updateNew(){
+            console.log(this.$page.props.flash.data)
+            this.selected.prospectuses = this.$page.props.flash.data;
+            this.openProspectus(this.selected.prospectuses[this.index],this.index);
+        },
         nxtBtn(type){
             (type == 'next') ? this.tabIndex++ : this.tabIndex--;
             this.tabIndex2 = 0;
@@ -210,6 +237,22 @@ export default {
         },
         rmvBtn(one,two,three){
             this.semesters[one].semesters[two].courses.splice(three,1);
+        },
+        lockBtn(data){
+            this.$refs.lock.set(data);
+        },
+        activateBtn(data){
+            this.status = 'status';
+            this.$refs.status.set(data);
+        },
+        saveBtn(){
+            this.form.id = this.prospectus.id;
+            this.form.subjects = this.updated;
+
+            this.form.put('/schools/update',{
+                preserveScroll: true,
+                onSuccess: (response) => {}
+            });
         },
         totalUnits(lists){
             var sum = 0;

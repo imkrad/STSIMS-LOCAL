@@ -25,7 +25,7 @@ return new class extends Migration
             $table->json('attachment');
             $table->integer('semester_id')->unsigned()->index();
             $table->foreign('semester_id')->references('id')->on('school_semesters')->onDelete('cascade');
-            $table->tinyInteger('level_id')->unsigned()->index();
+            $table->tinyInteger('level_id')->unsigned()->nullable();
             $table->foreign('level_id')->references('id')->on('list_dropdowns')->onDelete('cascade');
             $table->bigInteger('scholar_id')->unsigned()->index();
             $table->foreign('scholar_id')->references('id')->on('scholars')->onDelete('cascade');

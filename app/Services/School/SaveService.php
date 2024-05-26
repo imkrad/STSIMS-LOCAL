@@ -15,6 +15,7 @@ use App\Models\ScholarEnrollment;
 use App\Models\ScholarEnrollmentSubject;
 use App\Jobs\NewSemester;
 use App\Traits\HandlesCurl;
+use Carbon\Carbon;
 
 class SaveService
 {
@@ -27,7 +28,10 @@ class SaveService
     }
 
     public function semester($request){
-        $data = SchoolSemester::create(array_merge($request->all(),['is_active' => true]));
+        $start = Carbon::parse($request->start_at)->format('Y-m-d');
+        $end = Carbon::parse($request->end_at)->format('Y-m-d');
+       
+        $data = SchoolSemester::create(array_merge($request->all(),['is_active' => true,'start_at' => $start, 'end_at' => $end]));
         if($data){
             $ids = SchoolSemester::where('school_id',$request->school_id)->where('is_active',1)->where('id','!=',$data->id)->pluck('id');
             foreach($ids as $id){

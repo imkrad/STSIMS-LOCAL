@@ -48,7 +48,10 @@ class ListService
                                 ListProgram::insertOrIgnore((array)$data); 
                             break;
                             case 'privileges':
-                                ListPrivilege::insertOrIgnore((array)$data); 
+                                $arr = (array)$data;
+                                $arr['regular_amount'] = trim(str_replace(',','',$arr['regular_amount']),'₱ ');
+                                $arr['summer_amount'] = trim(str_replace(',','',$arr['summer_amount']),'₱ ');
+                                ListPrivilege::insertOrIgnore($arr); 
                             break;
                         }
                     }

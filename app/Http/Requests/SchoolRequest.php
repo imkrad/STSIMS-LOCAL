@@ -17,6 +17,22 @@ class SchoolRequest extends FormRequest
             return [
                 'school_year' => 'required|integer',
             ];
+        }else if($this->type == 'semester'){    
+            return [
+                'academic_year' => 'required',
+                'semester_id' => 'required|unique:school_semesters,semester_id,NULL,id,school_id,' . $this->school_id . ',academic_year,' . $this->academic_year,
+                'start_at' => 'required',
+                'end_at' => 'required',
+                'school_id' => 'required'
+            ];
+        }else if($this->type == 'grading'){
+            return [
+                'grade' => 'sometimes|required',
+                'lower_limit' => 'sometimes|required',
+                'upper_limit' => 'sometimes|required'
+            ];
+        }else if($this->type == 'truncate'){
+            return [];
         }else{
             return [];
         }

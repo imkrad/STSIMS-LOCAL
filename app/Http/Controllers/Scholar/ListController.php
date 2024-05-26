@@ -61,6 +61,9 @@ class ListController extends Controller
                 case 'scholar': 
                     return $this->save->scholar($request);
                 break;
+                case 'prospectus': 
+                    return $this->save->prospectus($request);
+                break;
             }
         });
 

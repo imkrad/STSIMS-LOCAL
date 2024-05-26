@@ -17,10 +17,10 @@
                                     <Course :id="school.data.id" :term="school.data.term"/>
                                 </BTab>
                                 <BTab title="Semesters">
-                                    <Semester />
+                                    <Semester :id="school.data.id" :term="school.data.term" :terms="terms"/>
                                 </BTab>
                                 <BTab title="Grading">
-                                    <Grading />
+                                    <Grading :id="school.data.id" :gradings="school.data.gradings"/>
                                 </BTab>
                             </BTabs>
                         </b-card-body>

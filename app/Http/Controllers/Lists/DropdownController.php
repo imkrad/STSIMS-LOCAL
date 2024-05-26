@@ -12,6 +12,7 @@ use App\Services\Lists\DropdownService;
 use App\Traits\HandlesTransaction;
 use App\Http\Resources\Search\SchoolResource;
 use App\Http\Resources\Search\CourseResource;
+use App\Http\Resources\Search\SubcourseResource;
 
 class DropdownController extends Controller
 {
@@ -33,6 +34,9 @@ class DropdownController extends Controller
             break;
             case 'courses2':
                 return $this->courses2($request);
+            break;
+            case 'subcourses':
+                return $this->subcourses($request);
             break;
             default: 
             return inertia('Modules/Lists/Dropdowns/Index',[
@@ -84,5 +88,12 @@ class DropdownController extends Controller
             $query->where('school_id',$school);
         })->get();
         return CourseResource::collection($data);
+    }
+
+    public function subcourses(Request $request){
+        $school = $request->school_id;
+        $course = $request->course_id;
+        $data = SchoolCourse::where('school_id',$school)->where('course_id',$course)->get();
+        return SubcourseResource::collection($data);
     }
 }

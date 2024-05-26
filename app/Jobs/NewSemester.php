@@ -56,7 +56,7 @@ class NewSemester implements ShouldQueue
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-                if($semester_name == 'Summer'){
+                if($semester_name == 'Summer Class'){
                     if($scholar->education->level->others == 'Third Year'){
                         $enrollment = ScholarEnrollment::create($fill);
                     }else{
