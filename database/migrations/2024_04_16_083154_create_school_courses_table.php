@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('school_courses', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('type')->default('n/a');
             $table->tinyInteger('years');
             $table->date('start_at')->nullable();
             $table->date('end_at')->nullable();

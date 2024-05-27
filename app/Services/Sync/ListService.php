@@ -2,6 +2,7 @@
 
 namespace App\Services\Sync;
 
+use App\Models\Setting;
 use App\Models\ListAgency;
 use App\Models\ListDropdown;
 use App\Models\ListPrivilege;
@@ -21,14 +22,14 @@ class ListService
 
     public function fetch(){
         set_time_limit(0);
-        $arrays = ['agencies','dropdowns','programs','privileges','courses','statuses'];
+        $arrays = ['agencies','dropdowns','programs','privileges','courses','statuses','settings'];
         try {
             foreach($arrays as $array){
                 $response = $this->handleCurl('lists',$array);
                 $lists = json_decode($response);
                 
                 if($array == 'settings'){
-                    $this->set($lists);
+                    $this->set(10);
                 }else{
                     foreach($lists as $data){
                         switch($array){
@@ -62,5 +63,45 @@ class ListService
             $response = 'Caught exception: '.$e->getMessage();
         }
         return $response;
+    }
+
+    public function set($agency){
+        $information = [
+            'address' => '',
+            'facebook' => '',
+            'telephone' => '',
+            'fax' => '',
+            'mobile' => '',
+        ];
+
+        $signatories = [
+            'Approved By' => [
+                'name' => '',
+                'position' => ''
+            ],
+            'Prepared By' => [
+                'name' => '',
+                'position' => ''
+            ],
+            'Certified Correct' => [
+                'name' => '',
+                'position' => ''
+            ],
+            'Reviewed By' => [
+                'name' => '',
+                'position' => ''
+            ],
+            'Verified Correct' => [
+                'name' => '',
+                'position' => ''
+            ],
+        ];
+
+        $data = new Setting;
+        $data->year = date('Y');
+        $data->information = json_encode($information);
+        $data->signatories = json_encode($signatories);
+        $data->agency_id = $agency;
+        $data->save();
     }
 }

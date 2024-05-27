@@ -108,7 +108,7 @@
         </div>
         <div class="text-center">
             <div>
-                <p>© DOST-STSIMS<i class='bx bxs-heart text-danger'></i> 2024</p>
+                <p>© DOST-STSIMS <i class='bx bxs-heart text-danger'></i> 2024</p>
             </div>
         </div>
     </div>

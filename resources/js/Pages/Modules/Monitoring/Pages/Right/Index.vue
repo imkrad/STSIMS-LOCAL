@@ -65,7 +65,7 @@
             </div>
         </b-col>
     </b-row>
-    <Released ref="released"/>
+    <Released @update="updateCount" ref="released"/>
 </template>
 <script>
 import Released from './Modals/Released.vue';
@@ -89,6 +89,9 @@ export default {
         },
         openRelease(data){
             this.$refs.released.show(data);
+        },
+        updateCount(){
+            this.right.releasing = 0;
         }
     }
 }

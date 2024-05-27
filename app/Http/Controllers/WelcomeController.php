@@ -11,12 +11,16 @@ use Illuminate\Http\Request;
 use App\Http\Resources\TsrResource;
 use App\Http\Resources\SampleResource;
 use App\Services\DropdownService;
+use App\Services\SettingService;
+use App\Traits\HandlesTransaction;
 
 class WelcomeController extends Controller
 {
+    use HandlesTransaction;
 
-    public function __construct(DropdownService $dropdown){
+    public function __construct(DropdownService $dropdown, SettingService $setting){
         $this->dropdown = $dropdown;
+        $this->setting = $setting;
     }
 
     public function index(){
@@ -42,5 +46,22 @@ class WelcomeController extends Controller
         if($data->save()){
             return redirect()->intended(route('dashboard', absolute: false));
         }
+    }
+
+    public function update(Request $request){
+        $result = $this->handleTransaction(function () use ($request) {
+            if($request->type == 'year'){
+                return $this->setting->year($request);
+            }else{
+                return $this->setting->semester($request);
+            }
+        });
+        
+        return back()->with([
+            'data' => $result['data'],
+            'message' => $result['message'],
+            'info' => $result['info'],
+            'status' => $result['status'],
+        ]);
     }
 }

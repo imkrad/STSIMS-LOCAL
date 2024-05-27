@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'kradjumli@gmail.com',
                 'password' => '$2y$12$0tCFkhs.g2ZYuhxvuL8Ykuf4FVdW.E34m9aiiZBcGQwWkYMNGuPSa',
                 'role' => 'Administrator',
-                'is_active' => 1,
+                'is_active' => 0,
                 'two_factor_secret' => NULL,
                 'two_factor_recovery_codes' => NULL,
                 'remember_token' => NULL,

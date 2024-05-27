@@ -22,8 +22,8 @@ class MonitoringController extends Controller
     }
 
     public function index(Request $request){
-        $type = $request->type;
-        switch($type){
+        $option = $request->option;
+        switch($option){
             case 'lacking_grades':
                 return $this->list->lacking_grades($request);
             break;
@@ -73,5 +73,16 @@ class MonitoringController extends Controller
             'info' => $result['info'],
             'status' => $result['status'],
         ]);
+    }
+
+    public function show($type){
+        switch($type){
+            case 'schools':
+                return inertia('Modules/Monitoring/Schools/Index',$this->view->schools());
+            break;
+            case 'batches':
+                return inertia('Modules/Monitoring/Batch/Index',$this->view->batches($request = null));
+            break;
+        }
     }
 }

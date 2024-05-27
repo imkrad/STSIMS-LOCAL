@@ -85,15 +85,21 @@
         </div>
     </div>
     <hr class="text-muted mt-n2"/>
-    <Link :href="`/monitoring/schools`">
+    <div class="row">
+        <div class="col-md-6">
+            <Link :href="`/monitoring/schools`">
+                <b-button style="width: 100%;" variant="light" class="btn-label waves-effect waves-light"><i class="bx bxs-webcam label-icon align-middle fs-16 me-2"></i> School Monitoring</b-button>
+            </Link>
+        </div>
+        <div class="col-md-6">
+            <Link :href="`/monitoring/batches`" class="ms-2">
+                <b-button style="width: 100%;" variant="light" class="btn-label waves-effect waves-light"><i class="bx bxs-webcam label-icon align-middle fs-16 me-2"></i> Batch Monitoring  </b-button>
+            </Link>
+        </div>
+    </div>
+     <!-- <Link :href="`/monitoring/schools`" class="ms-2">
         <b-button variant="light" class="btn-label waves-effect waves-light"><i class="bx bxs-webcam label-icon align-middle fs-16 me-2"></i> School Monitoring</b-button>
-    </Link>
-    <Link :href="`/monitoring/batches`" class="ms-2">
-        <b-button variant="light" class="btn-label waves-effect waves-light"><i class="bx bxs-webcam label-icon align-middle fs-16 me-2"></i> Batch Monitoring  </b-button>
-    </Link>
-     <Link :href="`/monitoring/schools`" class="ms-2">
-        <b-button variant="light" class="btn-label waves-effect waves-light"><i class="bx bxs-webcam label-icon align-middle fs-16 me-2"></i> School Monitoring</b-button>
-    </Link>
+    </Link> -->
     
     
     <Year ref="year"/>

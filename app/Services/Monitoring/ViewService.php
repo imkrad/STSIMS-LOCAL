@@ -8,6 +8,7 @@ use App\Models\ListAgency;
 use App\Models\ListDropdown;
 use App\Models\SchoolCampus;
 use App\Models\ScholarEnrollment;
+use App\Services\DropdownService;
 use App\Http\Resources\Dropdown\ListResource;
 use App\Http\Resources\Dropdown\StatusResource;
 use App\Http\Resources\Monitoring\SchoolResource;
@@ -16,9 +17,10 @@ class ViewService
 {
     public $code;
 
-    public function __construct()
+    public function __construct(DropdownService $dropdown)
     {
         $this->code = ListAgency::where('id',config('app.agency'))->value('region_code');
+        $this->dropdown = $dropdown;
     }
 
     public function schools(){
@@ -48,8 +50,8 @@ class ViewService
         return [
             'years' => $ongoingYears, 
             'dropdowns' => [
-                'statuses' => StatusResource::collection(ListStatus::get()),
-                'lists' => ListResource::collection(ListDropdown::all()),
+                'statuses' => $this->dropdown->scholar_statuses(),
+                'levels' => $this->dropdown->levels(),
             ],
             'statistics' => $this->statistics($request,$ongoingYears)
         ];

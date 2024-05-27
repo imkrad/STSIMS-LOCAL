@@ -22,6 +22,7 @@ Route::middleware(['2fa','auth','verified','is_active','menu'])->group(function 
     Route::resource('/financial-benefits', App\Http\Controllers\FinancialBenefitController::class);
     Route::resource('/reimbursements', App\Http\Controllers\ReimbursementController::class);
     Route::resource('/monitoring', App\Http\Controllers\MonitoringController::class);
+    Route::resource('/settings', App\Http\Controllers\WelcomeController::class);
 
     Route::prefix('scholars')->group(function(){
         Route::resource('/lists', App\Http\Controllers\Scholar\ListController::class);

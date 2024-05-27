@@ -42,12 +42,20 @@ class SaveService
     public function status($request){
         $scholars = $request->scholars;
         $data = Scholar::whereIn('id',$scholars)->update(['status_id' => $request->status_id,'is_synced' => 0]);
-        return $data;
+        return [
+            'data' => $data,
+            'message' => 'Scholar statuses updated successfully!', 
+            'info' => "You've successfully updated the scholar.",
+        ];
     }
 
     public function level($request){
         $scholars = $request->scholars;
         $data = ScholarEducation::whereIn('scholar_id',$scholars)->update(['level_id' => $request->level_id,'is_synced' => 0]);
-        return $data;
+        return [
+            'data' => $data,
+            'message' => 'Scholar level was updated successfully!', 
+            'info' => "You've successfully updated the scholar.",
+        ];
     }
 }

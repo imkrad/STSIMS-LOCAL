@@ -39,6 +39,7 @@
                 })
                 .then(response => {
                     this.isLoading = false;
+                    this.$emit('update',true);
                     this.hide();
                 })
                 .catch(err => console.log(err));

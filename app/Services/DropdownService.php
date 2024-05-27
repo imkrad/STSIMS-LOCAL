@@ -102,7 +102,8 @@ class DropdownService
         $data = ListStatus::whereIn('type',['Progress','Ongoing'])->get()->map(function ($item) {
             return [
                 'value' => $item->id,
-                'name' => $item->name
+                'name' => $item->name,
+                'type' => $item->type
             ];
         });
         return $data;
