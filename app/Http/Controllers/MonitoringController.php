@@ -43,7 +43,9 @@ class MonitoringController extends Controller
                 ];
             break;
             default : 
-            return inertia('Modules/Monitoring/Index',$this->count->statistics($request));
+            return inertia('Modules/Monitoring/Index',
+                $this->count->statistics($request)
+            );
         }
     }
 

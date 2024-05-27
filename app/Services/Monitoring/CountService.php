@@ -9,15 +9,17 @@ use App\Models\ListAgency;
 use App\Models\SchoolCampus;
 use App\Models\SchoolSemester;
 use App\Models\ScholarEnrollment;
+use App\Services\DropdownService;
 use App\Http\Resources\Monitoring\LackingResource;
 
 class CountService
 {
     public $code;
 
-    public function __construct()
+    public function __construct(DropdownService $dropdown)
     {
         $this->code = ListAgency::where('id',config('app.agency'))->value('region_code');
+        $this->dropdown = $dropdown;
     }
 
     public function statistics(){
@@ -44,6 +46,9 @@ class CountService
                     'statuses' => $this->statuses(),
                     'releasing' => $this->releasing()
                 ]
+            ],
+            'dropdowns' => [
+                'terms' => $this->dropdown->terms()
             ]
         ];
     }

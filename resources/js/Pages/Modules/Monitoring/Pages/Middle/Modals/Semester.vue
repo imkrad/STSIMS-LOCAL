@@ -67,7 +67,7 @@ export default {
             }
         },
         semesters : function() {
-            return this.dropdowns.data.filter(x => x.classification === this.type);
+            return this.dropdowns.filter(x => x.classification === this.type);
         },
     },
     methods : {

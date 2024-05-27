@@ -3,11 +3,13 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use App\Models\Setting;
 use App\Models\ListMenu;
 use App\Models\Configuration;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\SettingResource;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -60,6 +62,10 @@ class HandleInertiaRequests extends Middleware
             ];
         }
 
+        $settings = Setting::with('agency.region','semester','trimester','quarter')->first();
+        $region_code = ($settings)? $settings->agency->region_code : NULL;
+        $semester_year = ($settings)? $settings->year : NULL;
+
         return [
             ...parent::share($request),
             'user' => (\Auth::check()) ? new UserResource(User::with('profile','userrole.role')->where('id',\Auth::user()->id)->first()) : '',
@@ -74,7 +80,10 @@ class HandleInertiaRequests extends Middleware
             'menus' => [
                 'menus' => $menus,
                 'lists' => $listahan
-            ]
+            ],
+            'region_code' => $region_code,
+            'semester_year' => $semester_year,
+            'settings' => ($settings) ? new SettingResource($settings) : null
         ];
     }
 }

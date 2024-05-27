@@ -8,7 +8,7 @@
             </div>
          </div>
         <div class="file-manager-content p-3 pb-0 w-100" ref="myDiv">
-            <Middle :settings="settings" :dropdowns="dropdowns" :terms="statistics.middle.terms"/>
+            <Middle :settings="settings" :dropdowns="dropdowns.terms" :terms="statistics.middle.terms"/>
         </div>
         <div class="file-manager-sidebar">
             <div class="p-4 d-flex flex-column h-100 file-detail-content-scroll" data-simplebar>
@@ -24,7 +24,7 @@ import Middle from './Pages/Middle/Index.vue';
 import PageHeader from '@/Shared/Components/PageHeader.vue';
 export default {
     components: { PageHeader, Left, Right, Middle },
-    props: ['statistics','dropdowns'],
+    props: ['statistics','settings','dropdowns'],
     data() {
         return {
             currentUrl: window.location.origin
@@ -32,10 +32,3 @@ export default {
     },
 }
 </script>
-<style>
-.file-manager-sidebar {
-    min-width: 450px;
-    max-width: 450px;
-    height: calc(100vh - 180px);
-}
-</style>
