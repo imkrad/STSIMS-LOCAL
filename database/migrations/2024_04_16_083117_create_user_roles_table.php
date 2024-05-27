@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->morphs('roleable');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->tinyInteger('role_id')->unsigned()->index();

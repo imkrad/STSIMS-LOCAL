@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\configuration;
+use App\Models\ListMenu;
+use App\Models\ListAgency;
+use App\Models\Configuration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\DropdownService;
 
 class UtilityController extends Controller
 {
+    public function __construct(DropdownService $dropdown){
+        $this->dropdown = $dropdown;
+        $this->region = ListAgency::where('id',config('app.agency'))->value('region_code');
+    }
+
     public function index($type){
         switch($type){
             case 'overview':
@@ -17,7 +25,11 @@ class UtilityController extends Controller
             break;
             case 'users':
                 return inertia('Modules/User/Utility/Pages/User',[
-                    'configuration' =>  $this->configuration()
+                    'configuration' =>  $this->configuration(),
+                    'dropdowns' => [
+                        'roles' => $this->dropdown->roles(),
+                        'region' => $this->region
+                    ]
                 ]);
             break;
             case 'roles':
@@ -28,6 +40,12 @@ class UtilityController extends Controller
             case 'menus':
                 return inertia('Modules/User/Utility/Pages/Menu',[
                     'configuration' =>  $this->configuration()
+                ]);
+            break;
+            case 'access':
+                return inertia('Modules/User/Utility/Pages/Access',[
+                    'configuration' =>  $this->configuration(),
+                    'activemenus' => $this->menus()
                 ]);
             break;
             case 'authentications':
@@ -56,6 +74,19 @@ class UtilityController extends Controller
 
     public function configuration(){
         $data = Configuration::where('id',1)->first();
+        return $data;
+    }
+
+    public function menus(){
+        $data = ListMenu::where('is_mother',1)->orderBy('order','ASC')->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'is_active' => ($item->is_active) ? true : false,
+                'is_mother' => $item->is_mother,
+                'type' => $item->group
+            ];
+        });
         return $data;
     }
 }

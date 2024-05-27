@@ -24,7 +24,7 @@
                             <tr class="fs-11">
                                 <th></th>
                                 <th style="width: 30%;">Name</th>
-                                <th style="width: 15%;" class="text-center">Role</th>
+                                <th style="width: 15%;" class="text-center">Assigned</th>
                                 <th style="width: 15%;" class="text-center">Username</th>
                                 <th style="width: 15%;" class="text-center">Mobile</th>
                                 <th style="width: 15%;" class="text-center">Status</th>
@@ -41,9 +41,9 @@
                                 </td>
                                 <td>
                                     <h5 class="fs-13 mb-0 text-dark">{{list.name}}</h5>
-                                    <p class="fs-12 text-muted mb-0">{{list.email}}</p>
+                                    <p class="fs-12 text-muted mb-0">{{list.assigned_role}}</p>
                                 </td>
-                                <td class="text-center">{{list.role}}</td>
+                                <td class="text-center">{{list.assigned_at.name}}</td>
                                 <td class="text-center">{{list.username}}</td>
                                 <td class="text-center">{{list.mobile}}</td>
                                 <td class="text-center">
@@ -73,7 +73,7 @@
         </BCard>
     </form>
     <Api ref="api"/>
-    <Create ref="create"/>
+    <Create @update="fetch()" :dropdowns="dropdowns" ref="create"/>
     <Activation ref="activation"/>
 </div>
 </template>
@@ -91,6 +91,7 @@ export default {
             h(profile,[page])
         ])
     },
+    props: ['dropdowns'],
     components: { Create, Pagination, Activation, Api },
     data(){
         return {
@@ -129,7 +130,7 @@ export default {
             axios.get(page_url,{
                 params : {
                     keyword: this.filter.keyword,
-                    count: ((window.innerHeight-400)/58),
+                    count: ((window.innerHeight-450)/58),
                     option: 'lists'
                 }
             })

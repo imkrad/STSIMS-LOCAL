@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {return inertia('Welcome'); });
 Route::get('/verification/{code}', [App\Http\Controllers\WelcomeController::class, 'verification']);
 
+
 Route::middleware(['2fa','auth','verified'])->group(function () {
+    Route::resource('/profile', App\Http\Controllers\User\ProfileController::class);
+});
+
+
+Route::middleware(['2fa','auth','verified','is_active','menu'])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/insights', [App\Http\Controllers\InsightController::class, 'index']);
-    Route::resource('/profile', App\Http\Controllers\User\ProfileController::class);
 
     Route::resource('/schools', App\Http\Controllers\SchoolController::class);
     Route::resource('/enrollments', App\Http\Controllers\EnrollmentController::class);

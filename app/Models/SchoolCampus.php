@@ -74,9 +74,9 @@ class SchoolCampus extends Model
         return $this->belongsTo('App\Models\ListDropdown', 'grading_id', 'id');
     }
 
-    public function profile()
+    public function role()
     {
-        return $this->morphOne('App\Models\UserProfile', 'profileable');
+        return $this->morphOne('App\Models\UserRole', 'roleable');
     }
 
     public function scholars()

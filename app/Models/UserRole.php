@@ -9,6 +9,16 @@ class UserRole extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id', 
+        'role_id'
+    ];
+
+    public function roleable()
+    {
+        return $this->morphTo();
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
@@ -19,8 +29,4 @@ class UserRole extends Model
         return $this->belongsTo('App\Models\ListRole', 'role_id', 'id');
     }
 
-    public function laboratory()
-    {
-        return $this->belongsTo('App\Models\ListDropdown', 'laboratory_id', 'id');
-    }
 }

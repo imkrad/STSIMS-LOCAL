@@ -10,7 +10,8 @@ use App\Models\{
     ListProgram,
     ListDropdown,
     ListStatus,
-    ListPrivilege
+    ListPrivilege,
+    ListRole
 };
 use App\Http\Resources\TestserviceResource;
 
@@ -122,6 +123,17 @@ class DropdownService
             return [
                 'value' => $item->id,
                 'name' => $item->name
+            ];
+        });
+        return $data;
+    }
+
+    public function roles(){
+        $data = ListRole::where('is_active',1)->get()->map(function ($item) {
+            return [
+                'value' => $item->id,
+                'name' => $item->name,
+                'has_designation' => $item->has_designation
             ];
         });
         return $data;

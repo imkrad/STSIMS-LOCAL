@@ -88,7 +88,18 @@ export default {
             }
         }
     },
+    created(){
+        this.fetch();
+    },
     methods: {
+        fetch(page_url){
+            page_url = page_url || '/utility/menus/lists';
+            axios.get(page_url)
+            .then(response => {
+                this.lists = response.data.data;
+            })
+            .catch(err => console.log(err));
+        },
         openCreate(){
             this.$refs.create.show();
         },

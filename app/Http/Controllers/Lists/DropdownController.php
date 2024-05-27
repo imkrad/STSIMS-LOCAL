@@ -60,17 +60,25 @@ class DropdownController extends Controller
 
     public function schools($request){
         $keyword = $request->keyword;
+        $region = $request->region;
         $is_endorsed = $request->input('is_endorsed');
         $code = ListAgency::where('id',$this->id)->value('region_code');
         $data = SchoolCampus::with('school','term')
         // ->where(function ($query) use ($code,$is_endorsed) {
         //     ($is_endorsed) ? $query->where('assigned_region','!=',$code) : $query->where('assigned_region',$code);
         // })
-        ->whereHas('school',function ($query) use ($keyword) {
-            $query->where('name', 'LIKE', '%'.$keyword.'%');
+        ->when($request->keyword, function ($query, $keyword) {
+            $query->whereHas('school',function ($query) use ($keyword) {
+                $query->where('name', 'LIKE', '%'.$keyword.'%');
+            })->orWhere(function ($query) use ($keyword) {
+                $query->where('campus', 'LIKE', '%'.$keyword.'%');
+            })->orderBy('is_main','desc');
         })
-        ->orWhere(function ($query) use ($keyword) {
-            $query->where('campus',$keyword);
+        ->when($request->region, function ($query, $region) {
+            $query->where('assigned_region',$region)->orderBy('is_main','desc');
+        })
+        ->whereHas('school',function ($query) {
+            $query->orderBy('name','ASC');
         })
         ->get();
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User\Utility;
 
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Models\LocationRegion;
+use App\Models\LocationProvince;
+use App\Models\SchoolCampus;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -31,8 +34,25 @@ class UserController extends Controller
 
     public function store(UserRequest $request){
         $result = $this->handleTransaction(function () use ($request) {
-            $user = User::create(array_merge($request->all(), ['password' => bcrypt(rand(1000000000,9999999999)), 'role' => 'Staff']));
+            $user = User::create(array_merge($request->all(), ['password' => bcrypt('d0$Ts3!'), 'role' => 'Staff']));
             $user->profile()->create($request->all());
+
+            $profile = [
+                'user_id' => $user->id,
+                'role_id' => $request->role_id
+            ];
+
+            if($request->role['name'] == 'PSTO Staff'){
+                $province = LocationProvince::where('code',$request->province)->first();
+                $province->role()->create($profile);
+            }else if($request->role['name'] == 'University Coordinator'){
+                $school = SchoolCampus::where('id',$request->school)->first();
+                $school->role()->create($profile);
+            }else{
+                $province = LocationRegion::where('code',$request->region)->first();
+                $province->role()->create($profile);
+            }
+
             return [
                 'data' => $user,
                 'message' => 'User creation was successful!', 
@@ -84,8 +104,11 @@ class UserController extends Controller
                     $query->where('username', 'LIKE', "%{$keyword}%")->whereNotIn('role',['Scholar','Administrator']);
                 });
             })
-            // ->where('role','Staff')
+            ->where('role','Staff')
             ->paginate($request->count)
+            ->loadMorph('userrole.roleable', [ 
+                SchoolCampus::class => ['school'],
+            ])
         );
         return $data;
     }

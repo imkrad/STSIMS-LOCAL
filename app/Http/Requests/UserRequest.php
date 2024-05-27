@@ -21,7 +21,10 @@ class UserRequest extends FormRequest
             'middlename' => 'sometimes|required|string|max:50',
             'suffix' => 'sometimes|nullable|string|max:10',
             'gender' => 'sometimes|required|string|max:6',
-            'mobile' => 'sometimes|required|numeric|digits:11|unique:user_profiles,mobile,'.$this->profile_id
+            'mobile' => 'sometimes|required|numeric|digits:11|unique:user_profiles,mobile,'.$this->profile_id,
+            'school' => 'required_if:role_id,5',
+            'province' => 'required_if:role_id,4',
+            'role_id' => 'required|integer'
         ];
     }
 }
