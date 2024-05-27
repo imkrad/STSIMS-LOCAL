@@ -47,11 +47,13 @@
             </div>
         </div>
     </div>
+    <Prospectus ref="prospectus"/>
 </template>
 <script>
 import simplebar from 'simplebar-vue';
+import Prospectus from '../Modals/Prospectus.vue';
 export default {
-    components: { simplebar },
+    components: { simplebar, Prospectus },
     data(){
         return {
             currentUrl: window.location.origin,

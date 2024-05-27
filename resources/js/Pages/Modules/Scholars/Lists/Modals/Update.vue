@@ -21,13 +21,11 @@
                     </div>
                     <hr class="text-muted border-dashed"/>
                     <div class="mt-n2">
-                        <div class="form" :class="(form.errors) ? (form.errors.course_id) ? 'text-danger' : '' : ''">
-                            <label>Status</label>
-                            <Multiselect class="form-control"
-                            placeholder="Select Status" label="name" trackBy="name"
-                            v-model="status" :close-on-select="true" 
-                            :searchable="false" :options="statuses"/>
-                        </div>
+                        <InputLabel for="name" value="Status" :message="form.errors.status_id"/>
+                        <Multiselect class="form-control"
+                        placeholder="Select Status" label="name" trackBy="name"
+                        v-model="status" :close-on-select="true" 
+                        :searchable="true" :options="statuses"/>
                     </div>
                 </div>
             </div>
@@ -40,9 +38,9 @@
 </template>
 <script>
 import Multiselect from "@vueform/multiselect";
-import "@vueform/multiselect/themes/default.css";
+import InputLabel from '@/Shared/Components/Forms/InputLabel.vue';
 export default {
-    components : { Multiselect },
+    components : { Multiselect, InputLabel },
     props: ['statuses'],
     data(){
         return {
@@ -50,7 +48,7 @@ export default {
             showModal: false,
             selected: { profile:{} },
             status: '',
-            form: {},
+            form: { errors: []},
             type: ''
         }
     },

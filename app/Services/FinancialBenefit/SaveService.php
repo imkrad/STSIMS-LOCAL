@@ -29,7 +29,11 @@ class SaveService
                 }
             }
         }
-        return $data;
+        return [
+            'data' => $data,
+            'message' => 'Benefits was generated successfully!', 
+            'info' => "You've successfully generate the benefits.",
+        ];
     }
 
     public function completed($request){
@@ -37,7 +41,12 @@ class SaveService
         $benefit = ScholarEnrollmentBenefit::where('release_id',$request->id)->update(['status_id' => 13]);
         $data = Release::where('id',$request->id)->update(['status_id' => 13, 'attachment' => json_encode($attachments)]);
         $data = Release::where('id',$request->id)->first();
-        return new ReleaseResource($data);
+
+        return [
+            'data' => new ReleaseResource($data),
+            'message' => 'Benefits was released successfully!', 
+            'info' => "You've successfully released the benefits.",
+        ];
     }
 
     public function upload($request){

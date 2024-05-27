@@ -8,7 +8,7 @@
         <div class="dropdown-menu dropdown-menu-lg" id="search-dropdown">
             <SimpleBar data-simplebar style="max-height: height: calc(100vh/2 - 326px)">
                 <div class="notification-list">
-                    <b-link @click="chooseScholar(list)" v-for="(list, index) of names" :key="index" class="d-flex dropdown-item notify-item py-2">
+                    <b-link @click="choose(list)" v-for="(list, index) of names" :key="index" class="d-flex dropdown-item notify-item py-2">
                         <img :src="currentUrl+'/images/avatars/'+list.profile.avatar" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
                         <div class="flex-1">
                             <h6 class="m-0">{{ list.profile.name}}</h6>
@@ -19,17 +19,33 @@
             </SimpleBar>
         </div>
     </form>
-    <Course ref="course" @update="update" @clear="clear"/>
+    <ul class="list-unstyled mb-0 vstack gap-3 mb-3" v-if="reimbursement.scholar">
+        <li>
+            <hr class="mt-0 text-muted"/>
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <img :src="currentUrl+'/images/avatars/'+reimbursement.scholar.profile.avatar" alt="" class="avatar-sm rounded">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <button @click="clear()" class="btn btn-outline-danger btn-sm bg-gradient waves-effect waves-light float-end mt-n1" type="button">
+                        <div class="btn-content"> Change scholar</div>
+                    </button>
+                    <h6 class="fs-14 mb-1 text-primary">{{reimbursement.scholar.profile.name}}</h6>
+                    <span :class="'badge bg-secondary bg-'+reimbursement.scholar.status.color">{{reimbursement.scholar.status.name}}</span>
+                </div>
+            </div>
+            <hr class="mt-3 text-muted"/>
+        </li>
+    </ul>
 </template>
 <script>
 import _ from 'lodash';
-import Course from '../Modals/Course.vue';
 export default {
-    components: { Course },
     data(){
         return {
             currentUrl: window.location.origin,
             names: [],
+            reimbursement: { scholar: null},
             scholar: {education: {school: {} ,course:{}, subcourse:{}}},
             keyword: null
         }
@@ -43,7 +59,7 @@ export default {
             this.search();
         }, 500),
         search(){
-            axios.get('/enrollments', {
+            axios.get('/reimbursements', {
                 params: {
                     keyword: this.keyword,
                     option: 'search'
@@ -57,26 +73,16 @@ export default {
             })
             .catch(err => console.log(err));
         },
-        chooseScholar(data){
-            this.scholar = data;
+        choose(data){
+            this.reimbursement.scholar = data;
+            this.semesters = data.semesters;
             this.$emit('set',data);
-            if (this.scholar.education.subcourse == null) {
-                if(this.scholar.education.school.semester){
-                    this.$refs.course.set(this.scholar);
-                    this.show = 'course';
-                    this.$emit('view',true);
-                }
-            }else{
-                if(this.show != 'enroll'){
-                    this.$emit('show',true);
-                }
-            }
-        },  
-        update(){
-             this.$emit('update',true);
         },
         clear(){
-            this.scholar = null;
+            var searchInput = document.getElementById("search-options");
+            searchInput.value = '';
+            this.reimbursement.scholar = '';
+            this.isCustomDropdown();
             this.$emit('clear',true);
         },
         isCustomDropdown() {

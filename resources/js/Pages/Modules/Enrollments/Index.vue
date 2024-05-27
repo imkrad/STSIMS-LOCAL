@@ -44,6 +44,9 @@ export default {
         },
         updateData(data){
             this.$refs.sidebar.updateEnrollment(data);
+        },
+        updateView(){
+            this.show = 'default';
         }
     }
 }

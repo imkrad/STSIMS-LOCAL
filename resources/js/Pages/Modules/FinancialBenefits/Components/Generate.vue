@@ -53,7 +53,7 @@
         </simplebar>
     </div>
     <View ref="view"/>
-    <Confirm ref="confirm"/>
+    <Confirm @update="showList()" ref="confirm"/>
 </template>
 <script>
 import _ from 'lodash';
@@ -97,6 +97,9 @@ export default {
         },
         openConfirm(){
             this.$refs.confirm.set(this.lists,this.latest,this.total);
+        },
+        showList(){
+            this.$parent.showList();
         },
         formatMoney: function formatMoney(value) {
             var val = (value / 1).toFixed(2).replace(',', '.');

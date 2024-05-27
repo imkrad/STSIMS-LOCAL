@@ -10,6 +10,7 @@ use App\Services\Scholar\ViewService;
 use App\Services\Scholar\SaveService;
 use App\Services\Scholar\TruncateService;
 use App\Traits\HandlesTransaction;
+use App\Http\Requests\ScholarRequest;
 
 class ListController extends Controller
 {
@@ -55,7 +56,7 @@ class ListController extends Controller
         }
     }
 
-    public function update(Request $request){
+    public function update(ScholarRequest $request){
         $result = $this->handleTransaction(function () use ($request) {
             switch($request->option){
                 case 'scholar': 

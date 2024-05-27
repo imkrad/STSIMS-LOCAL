@@ -9,7 +9,8 @@ use App\Models\{
     LocationBarangay,
     ListProgram,
     ListDropdown,
-    ListStatus
+    ListStatus,
+    ListPrivilege
 };
 use App\Http\Resources\TestserviceResource;
 
@@ -108,6 +109,16 @@ class DropdownService
 
     public function qualifier_statuses(){
         $data = ListStatus::where('type','Qualifier')->get()->map(function ($item) {
+            return [
+                'value' => $item->id,
+                'name' => $item->name
+            ];
+        });
+        return $data;
+    }
+
+    public function privileges(){
+        $data = ListPrivilege::where('is_reimburseable',1)->get()->map(function ($item) {
             return [
                 'value' => $item->id,
                 'name' => $item->name

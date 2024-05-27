@@ -28,4 +28,9 @@ class ViewService
         })->take(5)->get();
         return ShowResource::collection($data);
     }
+
+    public static function activeprospectus($request){
+        $data = SchoolProspectus::where('is_active',1)->where('school_course_id',$request->school_course_id)->first();
+        return $data;
+    }
 }

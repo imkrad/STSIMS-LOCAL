@@ -73,6 +73,7 @@ export default {
             this.form.post('/financial-benefits',{
                 preserveScroll: true,
                 onSuccess: (response) => {
+                    this.$emit('update',true);
                     this.showModal = false;
                 }
             });

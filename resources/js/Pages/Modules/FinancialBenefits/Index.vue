@@ -6,7 +6,7 @@
             <Sidebar :latest="latest" ref="sidebar"/>
         </div>
         <div class="file-manager-content w-100 p-4 pb-0" style="height: calc(100vh - 180px); overflow: auto;" ref="box">
-            <Lists v-if="show == 'default'" ref="lists"/>
+            <Lists :privileges="privileges" v-if="show == 'default'" ref="lists"/>
             <Generate :latest="latest" v-else ref="generate"/>
         </div>
     </div>
@@ -18,7 +18,7 @@ import Generate from './Components/Generate.vue';
 import PageHeader from '@/Shared/Components/PageHeader.vue';
 export default {
     components: { PageHeader, Lists, Sidebar, Generate },
-    props: ['latest'],
+    props: ['latest','privileges'],
     data(){
         return {
             currentUrl: window.location.origin,
@@ -32,6 +32,10 @@ export default {
         showPage(data){
             this.show = data;
             (data == 'generate') ?  this.$nextTick(function(){this.$refs.generate.fetch()}) : '';
+        },
+        showList(){
+            this.show = 'default';
+            this.$refs.sidebar.set(this.latest);
         }
     }
 }

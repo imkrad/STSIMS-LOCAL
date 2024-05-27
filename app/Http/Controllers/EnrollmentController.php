@@ -26,6 +26,9 @@ class EnrollmentController extends Controller
             case 'search':
                 return $this->view->search($request);
             break;
+            case 'activeprospectus':
+                return $this->view->activeprospectus($request);
+            break;
             default : 
             return inertia('Modules/Enrollments/Index');
         }

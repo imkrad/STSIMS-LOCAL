@@ -75,21 +75,11 @@
                 data.append('id',this.selected.id);
                 data.append('batch',this.selected.batch);
 
-                // axios.post(this.currentUrl + '/financial-benefits', data)
-                // .then(response => {
-                //     this.showModal = false;
-                // })
-                // .catch(error => {
-                //     if (error.response.status == 422) {
-                //         this.errors = error.response.data.errors;
-                //     }
-                // });
-
-
                 this.$inertia.post('/financial-benefits', data, {
                     preserveScroll: true,
                     forceFormData: true,
                     onSuccess: (response) => {
+                        this.$emit('update',true);
                         this.showModal = false;
                     },
                     onError: () => {

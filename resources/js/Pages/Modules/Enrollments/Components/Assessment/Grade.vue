@@ -58,6 +58,7 @@ export default {
                 preserveScroll: true,
                 forceFormData: true,
                 onSuccess: (response) => {
+                    this.$emit('message',true);
                     this.hide();
                 },
                 onError: () => {
@@ -66,7 +67,6 @@ export default {
             });
         },
         hide() {
-            this.$emit('message',true);
             this.showModal = false;
             this.errors = [];
         }

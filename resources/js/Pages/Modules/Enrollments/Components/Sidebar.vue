@@ -1,6 +1,6 @@
 <template>
     <div class="p-4 d-flex flex-column h-100" style="overflow: auto;">
-        <Search @clear="updateEducation" @set="handleSetEvent" @show="showProspectus"/>
+        <Search @clear="clear" @view="updateView" @update="updateEducation" @set="handleSetEvent" @show="showProspectus"/>
         <div class="alert alert-secondary mt-n2" v-if="!scholar" role="alert">Search scholar to enroll. Using name or SPAS Id</div>
         <ul class="list-unstyled mb-0 vstack gap-3" v-else>
             <li>
@@ -84,10 +84,6 @@ export default {
         handleSetEvent(dataFromChild) {
             this.scholar = dataFromChild;
         },
-        updateEducation(){
-            this.scholar.education = this.$page.props.flash.data.data;
-            this.$parent.showProspectus(this.$page.props.flash.data.data);
-        },
         showProspectus(){
             this.$parent.showProspectus(this.scholar.education);
         },
@@ -97,11 +93,22 @@ export default {
         showAssessment(data){
             this.$parent.showAssessment(data,this.scholar.education.school.gradings);
         },
+        updateEducation(){
+            this.scholar.education = this.$page.props.flash.data.data;
+            this.$parent.showProspectus(this.$page.props.flash.data.data);
+        },
         updateEnrollment(data){
             let id = data.id;
             let index = this.scholar.enrollments.findIndex(item => item.id === id);
             this.scholar.enrollments[index] = data;
             this.showAssessment(data);
+        },
+        updateView(){
+            this.$parent.updateView();
+        },
+        clear(){
+            this.scholar = null;
+            this.$parent.updateView();
         }
     }
 }

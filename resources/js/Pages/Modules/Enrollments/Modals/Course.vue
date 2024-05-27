@@ -89,7 +89,7 @@ export default {
             this.form.put('/scholars/lists/update',{
                 preserveScroll: true,
                 onSuccess: (response) => {
-                    this.hide();
+                    this.update();
                 }
             });
         },
@@ -97,6 +97,10 @@ export default {
             axios.get('/lists/dropdowns',{ params: { option: 'subcourses', school_id: this.scholar.education.school.id, course_id: this.scholar.education.course.id} })
             .then(response => { this.subcourses = response.data.data; })
             .catch(err => console.log(err));
+        },
+        update(){
+            this.$emit('update',true);
+            this.showModal = false;
         },
         hide(){
             this.$emit('clear',true);

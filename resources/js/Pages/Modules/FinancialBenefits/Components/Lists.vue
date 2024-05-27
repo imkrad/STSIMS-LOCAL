@@ -7,8 +7,8 @@
                 <span @click="refresh" class="input-group-text" v-b-tooltip.hover title="Refresh" style="cursor: pointer;"> 
                     <i class="bx bx-refresh search-icon"></i>
                 </span>
-                <b-button type="button" variant="primary">
-                    <i class="ri-add-circle-fill align-bottom me-1"></i> Search
+                <b-button @click="openReimbursement" type="button" variant="primary">
+                    <i class="ri-add-circle-fill align-bottom me-1"></i> Reimbursement
                 </b-button>
             </div>
         </b-col>
@@ -49,15 +49,18 @@
         <Pagination class="ms-2 me-2" v-if="meta" @fetch="fetch" :lists="lists.length" :links="links" :pagination="meta" />
     </div>
     <View ref="view"/>
-    <Confirm ref="confirm"/>
+    <Confirm @update="fetch()" ref="confirm"/>
+    <Reimbursement :privileges="privileges" ref="reimbursement"/>
 </template>
 <script>
 import _ from 'lodash';
 import View from "../Modals/Lists/View.vue";
 import Confirm from '../Modals/Lists/Confirm.vue';
+import Reimbursement from '../Modals/Reimbursement.vue';
 import Pagination from "@/Shared/Components/Pagination.vue";
 export default {
-    components: { Pagination, Confirm, View },
+    props: ['privileges'],
+    components: { Pagination, Confirm, View, Reimbursement },
     data(){
         return {
             currentUrl: window.location.origin,
@@ -99,6 +102,9 @@ export default {
         },
         openConfirmation(data){
             this.$refs.confirm.set(data);
+        },
+        openReimbursement(){
+            this.$refs.reimbursement.show();
         },
         formatMoney: function formatMoney(value) {
             var val = (value / 1).toFixed(2).replace(',', '.');
