@@ -4,9 +4,9 @@
         <nav class="navbar navbar-expand-lg navbar-landing fixed-top" id="navbar">
             <b-container>
                 <b-link class="navbar-brand" href="/">
-                    <img src="imagess/logo-dark.png" class="card-logo card-logo-dark" alt="logo dark"
+                    <img src="images/logo-dark.png" class="card-logo card-logo-dark" alt="logo dark"
                         height="25">
-                    <img src="imagess/logo-light.png" class="card-logo card-logo-light" alt="logo light"
+                    <img src="images/logo-light.png" class="card-logo card-logo-light" alt="logo light"
                         height="17">
                 </b-link>
                 <button class="navbar-toggler py-0 fs-20 text-body" type="button" v-b-toggle.navbarSupportedContent>

@@ -7,7 +7,7 @@
                     <b-col md>
                         <b-row class="align-items-center g-1">
                             <b-col md="auto">
-                                <b-img class="img-thumbnail rounded-circle" style="width: 50px; height: 50px;" alt="img" src="/imagess/avatars/avatar.jpg" data-holder-rendered="true"></b-img>
+                                <b-img class="img-thumbnail rounded-circle" style="width: 50px; height: 50px;" alt="img" src="/images/avatars/avatar.jpg" data-holder-rendered="true"></b-img>
                             </b-col>
                             <b-col md>
                                 <div class="ms-2 mt-n2">
